@@ -26,7 +26,7 @@ void main() {
       expect(target.status, 0);
     });
 
-    test('Simulation', () {
+    test('Fiddler', () {
       int tth = 0;
       int ttt = 0;
       final count = 1000000;
@@ -101,7 +101,7 @@ void main() {
       }).toList();
     }
 
-    test('create equations', () {
+    test('Extra Credit', () {
       List<String> targets = ['HHH', 'HHT', 'HTH', 'HTT', 'THH', 'THT', 'TTH', 'TTT'];
       for (final target_string in targets) {
         for (final target_string2 in targets) {
