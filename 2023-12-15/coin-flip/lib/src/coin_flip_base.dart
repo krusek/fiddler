@@ -40,5 +40,9 @@ class Target {
     return true;
   }
 
+  void setStatus(int status) {
+    _status = target.sublist(0, status);
+  }
+
   int get status => _status.length;
 }
