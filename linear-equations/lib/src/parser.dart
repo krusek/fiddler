@@ -60,7 +60,6 @@ class Tokenizer {
 
   void tokenize(final String line) {
     String current = line.trim();
-    print(current);
     current = current
         .replaceAll('+\\s*+', '+')
         .replaceAll('+', ' + ')
@@ -68,7 +67,6 @@ class Tokenizer {
         .replaceAll('=', ' = ')
         .replaceAll('/', ' / ')
         .replaceAllMapped(matchers.variable, (match) => ' ${match.input.substring(match.start, match.end)} ');
-    print(current);
     final pieces = current.split(' ').where((element) => element.trim().isNotEmpty).toList();
     tokens =
         pieces.map((e) => Token.fromString(e, matchers)).where((element) => element.type != TokenType.empty).toList();
@@ -97,18 +95,15 @@ class Parser {
   final Matchers matchers;
   Map<String, Fraction> parseLine(String line) {
     final parts = line.split('=');
-    assert(parts.length == 2);
+    assert(parts.length == 2, line);
     Tokenizer tokenizer = Tokenizer(matchers);
     tokenizer.tokenize(parts[0]);
     final lhs = _evaluateSide(tokenizer);
-    print(lhs);
     tokenizer.tokenize(parts[1]);
     final rhs = _evaluateSide(tokenizer);
-    print(rhs);
     for (final String key in rhs.keys) {
       lhs[key] = (lhs[key] ?? Fraction.zero()) - (rhs[key] ?? Fraction.zero());
     }
-    print(lhs);
     return lhs;
   }
 

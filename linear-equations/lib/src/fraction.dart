@@ -80,6 +80,10 @@ class Fraction {
     return "$numerator/$denominator";
   }
 
+  double toDouble() {
+    return 1.0 * numerator / denominator;
+  }
+
   Comparison compareTo(Object unit) {
     if (unit is Fraction) {
       final lhs = numerator * unit.denominator;

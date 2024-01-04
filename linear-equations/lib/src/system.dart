@@ -57,7 +57,7 @@ class System {
     return null;
   }
 
-  void reduce() {
+  List<Equation> reduce() {
     List<String> variables = this.variables.toList()..sort();
     List<Equation> reduced = equations.map((e) => Equation.from(e)).toList();
     int used = 0;
@@ -78,6 +78,19 @@ class System {
       }
       used++;
     }
+    return reduced;
+  }
+
+  Equation? getEquation(List<Equation> reduced, String variable) {
+    for (Equation eq in reduced) {
+      if (eq[variable] == Fraction.one()) {
+        return eq;
+      }
+    }
+    return null;
+  }
+
+  void printReduced(List<Equation> reduced) {
     for (final eq in reduced) {
       for (final key in eq.keys.toList()) {
         if (eq[key]?.numerator == 0) eq.remove(key);
