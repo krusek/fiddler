@@ -6,6 +6,12 @@ class System {
   Set<String> variables = {};
   List<Equation> equations = [];
 
+  void addEquations(Iterable<Equation> equations) {
+    for (final equation in equations) {
+      addEquation(equation);
+    }
+  }
+
   void addEquation(Map<String, Fraction> equation) {
     equations.add(equation);
     for (final String variable in equation.keys) {
@@ -115,6 +121,13 @@ class System {
       }
       print(buffer.toString());
     }
+  }
+
+  Fraction evaluate(String variable, String total) {
+    for (Equation equation in equations) {
+      if (equation[variable] == Fraction.one()) return equation[total]?.negate() ?? Fraction.zero();
+    }
+    return Fraction.zero();
   }
 
   @override

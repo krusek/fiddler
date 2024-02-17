@@ -59,6 +59,7 @@ class Tokenizer {
   int index = 0;
 
   void tokenize(final String line) {
+    index = 0;
     String current = line.trim();
     current = current
         .replaceAll('+\\s*+', '+')
@@ -82,7 +83,7 @@ class Tokenizer {
 
   @override
   String toString() {
-    return tokens.toString();
+    return '$index: ${tokens.toString()}';
   }
 
   void assertToken(final TokenType type) {
@@ -93,6 +94,14 @@ class Tokenizer {
 class Parser {
   Parser(String variable) : matchers = Matchers(variable);
   final Matchers matchers;
+  Iterable<Map<String, Fraction>> parseLines(String lines) sync* {
+    final splitLines = lines.split('\n');
+    for (final line in splitLines) {
+      if (line.trim().isEmpty) continue;
+      yield parseLine(line);
+    }
+  }
+
   Map<String, Fraction> parseLine(String line) {
     final parts = line.split('=');
     assert(parts.length == 2, line);
