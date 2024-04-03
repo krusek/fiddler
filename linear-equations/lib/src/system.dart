@@ -2,6 +2,13 @@ import 'fraction.dart';
 
 typedef Equation = Map<String, Fraction>;
 
+Fraction evaluate(List<Equation> reduced, String variable, String total) {
+  for (Equation equation in reduced) {
+    if (equation[variable] == Fraction.one()) return equation[total]?.negate() ?? Fraction.zero();
+  }
+  return Fraction.zero();
+}
+
 class System {
   Set<String> variables = {};
   List<Equation> equations = [];
