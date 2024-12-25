@@ -1,0 +1,404 @@
+\documentclass{article}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{ifthen}
+\usepackage{makeidx}
+\newcommand{\makeind}{\makeindex } \newcommand{\ind}[1]{ } \newcommand{\printind} {}
+%\usepackage{hyperref} \hypersetup{backref,colorlinks=true} \renewcommand{\ind}[1]{\index{#1}} \renewcommand{\makeind}{\makeindex} \renewcommand{\printind}{\printindex } 
+\makeind
+\author{Korben Rusek}
+\title{Algebraic Geometry - Homework 1}
+\date{1-27-2010}
+\pagestyle{myheadings}
+\markright{Algebraic Geometry - Homework 1}
+\oddsidemargin 0.1in
+\evensidemargin 0.0in
+\textwidth 6.0in
+\begin{document}
+\maketitle
+% New commands and environments <<<
+\newtheorem{problem}{Problem}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{remark}{Remark}
+\newtheorem*{definition}{Definition}
+
+
+\newcommand{\poly}[3]{#1_0+#1_1#2+\cdots+#1_{#3-1}#2^{#3-1}+#1_#3#2^#3}
+\newcommand{\mpoly}[3]{#1_0+#1_1#2+\cdots+#1_{#3-1}#2^{#3-1}+#2^#3}
+\newcommand{\apoly}[3]{|#1_0|+|#1_1||#2|+\cdots+|#1_{#3-1}||#2|^{#3-1}+|#1_#3||#2|^#3}
+\newcommand{\gindex}[2]{|#1\!:\!#2|}
+\newcommand{\lcm}{\operatorname{lcm}}
+\newcommand{\irr}{\operatorname{irr}}
+\newcommand{\sylp}{$Syl_{p}$}
+\newcommand{\phnt}[1]{$\phantom{1}^{#1}$}
+\newcommand{\gen}[1]{\langle#1\rangle}
+\newcommand{\BA}{\mathbb{A}}
+\newcommand{\BB}{\mathbb{B}}
+\newcommand{\BP}{\mathbb{P}}
+\newcommand{\BN}{\mathbb{N}}
+\newcommand{\BZ}{\mathbb{Z}}
+\newcommand{\BQ}{\mathbb{Q}}
+\newcommand{\BR}{\mathbb{R}}
+\newcommand{\BC}{\mathbb{C}}
+\newcommand{\BF}{\mathbb{F}}
+\newcommand{\CD}{\mathcal{D}}
+\newcommand{\CF}{\mathcal{F}}
+\newcommand{\CH}{\mathcal{H}}
+\newcommand{\CQ}{\mathcal{Q}}
+\newcommand{\fa}{\mathfrak{a}}
+\newcommand{\fb}{\mathfrak{b}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fm}{\mathfrak{m}}
+\newcommand{\fn}{\mathfrak{n}}
+\newcommand{\fp}{\mathfrak{p}}
+\newcommand{\fq}{\mathfrak{q}}
+\newcommand{\FN}{\mathfrak{N}}
+\newcommand{\FR}{\mathfrak{R}}
+\newcommand{\FX}{\mathfrak{X}}
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\trv}{\set{1}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\proj}{\operatorname{proj}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Ker}{\operatorname{Ker}}
+\newcommand{\im}{\operatorname{Im}}
+\newcommand{\chr}{\operatorname{char}}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\grad}{\operatorname{grad}}
+\newcommand{\curl}{\operatorname{curl}}
+\renewcommand{\div}{\operatorname{div}}
+\newcommand{\sign}{\operatorname{sign}}
+\newcommand{\spn}{\operatorname{span}}
+\newcommand{\GL}{\operatorname{GL}}
+\newcommand{\SL}{\operatorname{SL}}
+\newcommand{\gl}{\mathfrak{gl}}
+\newcommand{\fo}{\mathfrak{o}}
+%\newcommand{\dim}{\operatorname{dim}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\Ann}{\operatorname{Ann}}
+\newcommand{\subsetopen}
+{\stackrel{\subset}
+{\scriptscriptstyle\mathrm{ open}}}
+%>>>
+
+Given a circle of radius $r$, the area is $A(r)=\pi r^2$ and the perimeter is $p(r)=2\pi r$.
+Note that $\frac{dA}{dr}=p(r)$.
+
+Let's look at polygons. Pick $n\in\BZ^+\ge 3$.
+
+\begin{problem}
+  Is the set $\{(t,\sin t)|t\in\BR\}$ algebraic? % Done
+  \begin{proof}
+    Suppose that $V=\{(t,\sin t)|t\in\BR\}$ is algebraic. Now let $F\in I(V)$.
+    Now, of course, $F(x,0)$ is a polynomial in $x$. But $F(x,0)$ has zeros at
+    $n\pi$ for all $n\in\BZ$. Hence $F(x,0)$ has infinitely many zeros and so
+    $F(x,0)=0$. Similarly, for any value $y_0\in[-1,1]$, we have infinitely many
+    zeros for $F(x,y_0)$ and so $F(x,y_0)=0$. Therefore $F$ is zero on
+    $\BR\times[-1,1]$. Continuing the argument, we see that for any $x_0$ we
+    have $F(x_0,y)$ is zero on $[-1,1]$ and so is the zero polynomial. Hence
+    $F(x_0,y)=0$ for all $y\in\BR$. Therefore $F(x,y)$ is the zero polynomial.
+    This is true for all $F\in I(V)$ and so $I(V)=0$ and hence $V=\BR$. This is
+    a contradiction and so our original $V$ is not an algebraic set.
+  \end{proof}
+\end{problem}
+
+\begin{problem}
+  % DONE for some x\notin V find F st F|V=0 and f(x)=1
+  Let $V$ be an affine algebraic set, $V\subset k^n$, and consider $x\notin
+  V$. Show that there is an $F\in k[X_1,\dots,X_n]$ such that $F(x)=1$ and
+  $F|V=0$.
+  \begin{proof}
+    Since $V$ is affine algebraic then it is an intersection of basic
+    closed sets. That is, $V=\cap V(f_i)$ for some set of functions
+    $\{f_i\}$. Now if $x\notin V$ then there must be some $f_i$ such that
+    $x\notin V(f_i)$. Thus $f_i(x)\ne0$ and we can define
+    $G(X)=f_i(X)/f_i(x)$. Of course, this means that $G(x)=1$. Finally
+    $G|V=0$ since, by construction, $V(f_i)=V(G)$ and $V(f_i)\subset V$.
+  \end{proof}
+\end{problem}
+
+\begin{problem}
+  % Done
+  Let $F\in k[X,Y]$ be an irreducible polynomial. Assume that $V(F)$ is
+  infinite. Prove that $I(V(F))=(F)$. Let $F$ be of the form
+  $F_1^{\alpha_1}\cdots F_r^{\alpha_r}$, where the polynomials $F_i$ are
+  irreducible and the sets $V(F_i)$ are infinite. Find the irreducible
+  components of $V(F)$.
+  \begin{proof}
+    Since $F$ is irreducible then $(F)$ is a prime ideal, since $k[X,Y]$ is
+    a $UFD$. 
+    Also we know that $I(V(F))=\sqrt{(F)}$. Now since
+    $(F)$ is prime then $\sqrt{(F)}=(F)$. That is, if $\fp$ is prime and
+    $f^{n-1}f=f^n\in\fp$ then
+    $f\in\fp$ or $f^{n-1}\in\fp$, by primality. Coninuing inductively
+    gives $f\in\fp$. Hence $I(V(F))=(F)$. Furthermore
+    $V(F)$ is irreducible since it is the variety of a prime ideal $(F)$.
+
+    Now suppose that $F=F_1^{\alpha_1}\cdots F_r^{\alpha_r}$. Now
+    I claim that $V(F)=V(F_1^{\alpha_1})\cup V(F_r^{\alpha_r})$. 
+    This is easy to see. If $F(x)=0$ then $0=F_1(0)\cdots F_r(0)$ and at
+    least one of $F_i(x)=0$ because $k$ is an integral domain. Thus we have
+    $V(F)\subset V(F_1^{\alpha_1})\cup V(F_r^{\alpha_r})$. Furthermore if
+    $F_i(x)=0$ then of course $F(x)=0$ because $F_i$ is a factor of $F$.
+    Hence $V(F)=V(F_1^{\alpha_1})\cup V(F_r^{\alpha_r})$.
+    These
+    $V(F_i^{\alpha_i})$ are irreducible by the last sentence of the
+    previous part of this question, hence they are the irreducible
+    components.
+  \end{proof}
+\end{problem}
+
+\begin{problem}
+  % Done
+  Let $X$ be any topological space.
+  \begin{enumerate}
+    \item[a] If $X$ is irreducible and $U$ is an open subset of $X$, show
+      that $U$ is irreducible.
+    \item [b] If $X$ is of the form $U_1\cup U_2$, where the sets $U_i$ are
+      open and irreducible, and $U_1\cap U_2\ne\varnothing$, show that $X$
+      is irreducible.
+    \item [c] If $Y\subset X$ and $Y$ is irreducible, show that
+      $\overline{Y}$ is irreducible. 
+  \end{enumerate}
+  \begin{proof}[Proof of a]
+    I will prove this by contrapositive.
+    Suppose that $U\subset X$ is open and not irreducible. This means there
+    are non trivial relatively closed sets $U_1$ and $U_2$ of $U$ such that
+    $U_1\cup U_2 = U$. Now by definition of the relative topology there are
+    sets, closed in $X$, such that $Y_1\cap U=U_1$ and $Y_2\cap U=U_2$. Let
+    $C=X\setminus U$. Now I claim that $X_1:= Y_1\cup C$ and $X_2:=Y_2\cup
+    C$ are nontrivial closed sets in $X$ whose union is $X$. That is, $X_1$
+    and $X_2$ show that $X$ is not irreducible. First these sets are unions
+    of closed sets and hence closed. Of course, $X_1$ and
+    $X_2$ are neither equal to $X$ because each of their intersections 
+    with $U$ is not all of $U$. Finally, we see that
+    \begin{eqnarray*}
+      X_1\cup X_2&=& (Y_1\cap U)\cup (Y_2\cap U)\cup C\\
+      &=& ((Y_1\cup Y_2)\cap U)\cup C\\
+      &=& U\cup C = X.
+    \end{eqnarray*}
+    Hence $X$ is not irreducible.
+  \end{proof}
+  \begin{proof}[Proof of b]
+    Suppose that $X=U_1\cup U_2$ with $U_1\cap U_2\ne\varnothing$. Suppose
+    that $X$ is not irreducible.
+    We will again use the contrapositive to prove this. So we will show
+    that either $U_1$ or $U_2$ is not irreducible.
+    By definition, there are nontrivial closed
+    sets $X_1$ and $X_2$ such that $X=X_1\cup X_2$. First of all, if
+    $U_i\subset X_j$ for some $i,j$ then either $U_1$ or $U_2$ is not irreducible
+    and we are done. Without loss of generality we can
+    assume that $U_1\subset X_1$ and $U_2\subset X_2$. Since $X_1$ and
+    $X_2$ are nontrivial then this means that $U_1\not\subset X_2$ and
+    $U_2\not\subset X_1$. But we do have $U_1 \subset X_2\cup (X\setminus
+    U_2)$. This is because $U_2\subset X_2$. Now $U_1\not\subset X_2$ by
+    assumption and $U_1\not\subset X\setminus U_2$, because $U_1\cap
+    U_2\ne\varnothing$. Hence $U_1$ is not irreducible.
+  \end{proof}
+  \begin{proof}[Proof of c]
+    Suppose that $Y$ is an open irreducible subset of some space reducible space
+    $A$. If we show that there is a closed irreducible subset of $A$
+    containing $Y$ then this will prove that the closure of $Y$ must be a
+    proper subset of $A$. Since the only assumption we have on $A$ is
+    reducibility then this will show that the closure of $Y$ is
+    irreducible. Now since $A$ is reducible then we can nontrivially represent 
+    $A$ as $A=A_1\cup A_2$, where $A_1$
+    and $A_2$ are nontrivial closed subsets of $A$. Now since $Y$ is irreducible
+    then either $Y=Y\cap A_1$ or $Y=Y\cap A_2$, because these are closed
+    subsets of $Y$ whose union is all of $Y$. Suppose that $Y=Y\cap A_1$.
+    Hence $\overline{Y}\subset A_1$ and hence $\overline{Y}\ne A$. Thus $A$
+    cannot be the closure of $Y$. Therefore by contrapositive we know that
+    $\overline{Y}$ must be irreducible.
+  \end{proof}
+\end{problem}
+
+\begin{problem}[Irreducibility]
+  % NOT Done: Assuming V is finite in part d.
+  A ring $A$ is said to be {\it connected} if every idempotent in $A$ is
+  trivial.
+  \begin{enumerate}
+    \item [a] Prove that every integral domain is connected.
+    \item [b] If $A$ is the direct product of two non-trivial rings, prove
+      that $A$ is not connected.
+    \item [c] Conversely, if $A$ possesses a non-trivial idempotent $e$,
+      prove that $A\cong A/(e)\times A/(1-e)$.
+    \item [d] Let $V$ be an affine algebraic set over an algebraically
+      closed field $k$. Prove that $V$ is connected (in the Zariski
+      topology) if and only if $\Gamma(V)$ is connected. (If $V$ has two
+      connected components, start by finding a function which is $0$ on one
+      and 1 on the other.) Is this still the case if $K$ is not
+      algebraically closed?
+  \end{enumerate}
+  \begin{proof}[Proof of a]
+    Of course, every idempotent is a root of the polynomials $x^2-x$. Now in an
+    integral domain a polynomial $f$ has at most $\deg f$ roots. Hence we can
+    have no more that $2$ idempotents. Thus every integral domain is connected.
+    % We are assuming all rings have unity.
+  \end{proof}
+  \begin{proof}[Proof of b]
+    Suppose that $A\cong B\times C$ where $B$ and $C$ are nontrivial. Then the
+    unit of $A$ is $1_B\times 1_C$ and the zero is $0_B\times 0_C$ (where
+    $1_B,0_B$
+    and $1_C,0_C$ are the units and zeros of $B$ and $C$ respectively). Then the
+    element $1_B\times0_C$ is, of course, an idempotent. Since $B$ and $C$ are
+    not trivial then this is a nontrivial idempotent.
+  \end{proof}
+  \begin{proof}[Proof of c]
+    We look at a map $\varphi:A\rightarrow A/(e)\times A/(1-e)$ given by $a\mapsto
+    (\tilde{a},\hat{a})$, where $\tilde{a}$ is reduction modulo $(e)$ and
+    $\hat{a}$ modulo $(1-e)$. Since the maps to each of the modulo rings are
+    homomorphism then this map is too. Now of course, the kernel of the map is
+    given by $a\in (e)\cap(1-e)$. Thus our map is injective if
+    $(e)\cap(1-e)=\{0\}$. Now suppose $a\in(e)\cap(1-e)$. This means $a=\alpha
+    e$ and $a=\beta(1-e)$ for some $\alpha,\beta\in A$. Then we see that
+    $ea=\alpha e^2=\alpha e =a$ and $ea=\beta e(1-e)=\beta(e-e^2)=0$. Thus
+    $a=0$, and our map is injective. To show surjectivity, suppose that
+    $(\tilde{a},\hat{b})\in A/(e)\times A/(1-e)$. Now pick any representatives
+    $a$ and $b$ of $\tilde{a}$ and $\hat{b}$ respectively. Then we have
+    \[\varphi(a(1-e)+be)=(\tilde{\varphi}(a-ae+be),\hat{\varphi}(a(1-e)+be+b(1-e)))
+    =(\tilde{a},\hat{\varphi}(a(1-e)+b))=(\tilde{a},\hat{b}).\]
+    Thus our map is surjective. Hence we have the desired isomorphism.
+  \end{proof}
+  \begin{proof}[Proof of d]
+    Suppose that $V$ is disconnected. This means $V$ can be written as the
+    disjoint union of two nontrivial relatively open sets $X$ and $Y$. 
+    Since $V$ is closed (affine algebraic)
+    and $X$ and $Y$ are closed in the relative topology then $X$ and $Y$
+    are closed. This means that $X$ and $Y$ are both finite sets. Thus suppose
+    $X=\{a_0,\dots,a_n\}$ and $Y=\{b_0,\dots,b_m\}$. Then if we let 
+    $p=\prod (x-a_i)$ and 
+    \[f=p(x)\sum_{i=0}^m\frac{1}{p(b_i)}\prod_{j=0,j\ne i}^m(x-b_i),\]
+    it is clear that $f(b_i)=1$ for all $i=0,\dots,n$ and $p(a_i)=0$ for all
+    $i=0,\dots,n$. Hence $f^2(x)=f(x)$ for all $x\in V$.
+    % Find a function that's zeron on $X$ and const on $Y$.
+    % Can get zero on $X$, of course.
+    % Can I get zero on $X$ and nonzero on $Y$?
+    %
+    % Suppose that $A=\Gamma(V)$ is disconnected.
+    % Then $\Gamma(V)$ has a nontrivial idempotent, $e$.
+    % Hence $A\cong A/(e)\times A/(1-e)$. So we have ideals $(e)$ and
+    % $(1-e)$. Then $V(e)\cap V(1-e)$ are disjoint? Yeah if $e(x)=0$ then
+    % $(1-e)(x)=1$. Also they are nonempty because our space is
+    % algebraically closed. But do they fill the space?
+
+    Suppose that $\Gamma(V)$ is disconnected. This means that
+    $\Gamma(V)$ has a nontrivial idempotent $e$. 
+    Now $V(e)\ne\varnothing$ because $e$ is
+    not constant, since it is a nontrivial idempotent and fields only have $0$
+    and $1$ as idempotents. Furthermore for any $x\in V$ we see that
+    $e^2(x)=e(x)$ so $e(x)$ must be either $0$ or $1$. Hence $V(e)\cup
+    V(1-e)=V$. Thus $V$ is disconnected.
+
+    We need $k$ to be algebraically closed for the second half of the proof.
+    That is, to assure that $e$ and $1-e$ have roots for our idempotent, $e$.
+  \end{proof}
+\end{problem}
+
+\begin{problem}
+  % NOT Done: A_1,A_2, A_3
+  Assume that $k$ is infinite. Determine the function rings $A_i$
+  ($i=1,2,3$) of the plane curves whose equations are $F_1=Y-X^2$,
+  $F_2=XY-1$, $F_3=X^2+Y^2-1$. Show that $A_1$ is isomorphic to the ring of
+  polynomials $k[T]$ and that $A_2$ is isomorphic to its localised ring
+  $k[T,T^{-1}]$. Show that $A_1$ and $A_2$ are not isomorphic (consider
+  their invertible elements). What can we say about $A_3$ relative to the
+  two other rings? (Treat separately the cases where $-1$ is or is not a
+  square in $k$, and pay special attention to the characteristic $2$ case.)
+  \begin{proof}
+    We have the map $k[x,y]\rightarrow k[T]$ given by $x\mapsto T$ and $y\mapsto
+    T^2$. This of course, maps onto $k[T]$. I claim that the kernel of this map
+    is $(y-x^2)$. Of course this is in the kernel. Now given an item
+    $f(x,y)$ in the kernel, we can reduce modulo $(y-x^2)$ which gives us 
+    \[f(x,y)=g(x,y)(y-x^2)+h(x).\]
+    Now clearly the only way for this to be zero is for $h(x)=0$. Hence
+    $f(x,y)\in(y-x^2)$. Thus we have $A_1=k[x,y]/(y-x^2)\cong k[T]$.
+
+    For $A_2$ we have the map $XY-1$. We similarly construct a map
+    $\varphi:k[x,y]\rightarrow k[T,T^{-1}]$ given by $x\mapsto T$ and $y\mapsto
+    T^{-1}$, which is surjective. Also $(XY-1)\subset\ker\varphi$. Now suppose
+    that $f(x,y)\in\ker\varphi$. This gives us
+    \[f(x,y)=g(x,y)(XY-1)+h(x)+\ell(y).\]
+    Thus in the image we have $h(T)+\ell(T^{-1})$. In $k[T,T^{-1}]$, $T$ and
+    $T^{-1}$ are algebraically independent. Hence to have this in the kernel we
+    just have $h(T)=0=\ell(T^{-1})$, and so $A_2\cong k[T^{-1},T]$, as desired.
+
+    It is easy to see that $A_1$ and $A_2$ are not isomorphic. Suppose we 
+    have a map $\varphi:k[T,T^{-1}]\rightarrow k[T]$. I claim this cannot be an
+    isomorphism. If it were then $\varphi(-T)$ must be an invertible element.
+    That is $\varphi(-T)\in k$. Now $\varphi(-T)\ne-1$, because $\varphi(-1)$ must
+    be $-1$. Hence $\varphi(1-T)=\varphi(1)+\varphi(-T)\in k$ since both
+    $\varphi(1)$ and $\varphi(-T)\in k$. Also $\varphi(1-T)\ne0$. Thus
+    $\varphi(1-T)$ is invertible. But this is a problem since $1-T$ is not
+    invertible. In particular, the inverse of $1-T$ would need to be
+    $1+T+T^2+\cdots$ which is not in $k[T,T^{-1}]$.
+
+    Now we look at $A_{3}$. If $k$ is characteristic 2 then
+    \[
+      Y^2+X^2-1= Y^2+X^2+1=(Y+X+1)^2.
+    \]
+    Then we can easily map $x$ to $T$ and $Y$ to $T+1$. This is easily seen to
+    give an isomorphism between $A_3$ and $k[T]$.
+  \end{proof}
+\end{problem}
+
+\begin{problem}
+  % Done: twisted cubic.
+  Let $f:k\rightarrow k^3$ be the map which associates $(t,t^2,t^3)$ to $t$
+  and let $C$ be the image of $f$ (the space cubic). Show that $C$ is an
+  affine algebraic set and calculate $I(C)$. Show that $\Gamma(C)$ is
+  isomorphic to the ring of polynomials $k[T]$.
+  \begin{proof}
+    I claim that $C=V(y-x^2,z-x^3)$. This is easy to see. If we need to satisfy
+    $y-x^2$ then $y=x^2$ and $z-x^3$ gives us $z=x^3$. Hence a point must be
+    $(x,x^2,x^3)$ for any $x$. Thus $C=V(y-x^2,z-x^3)$. 
+
+    Now $I(C)=\sqrt{y-x^2,z-x^3}$. I claim that $I(C)=(y-x^2,z-x^3)$. That is,
+    the original ideal is radical. Suppose that $p\in I(C)$. We can successively
+    devide by $y-x^2$ and $z-x^3$ with respect to $y$ and $z$ and we get
+    \[p=h(x,y,z)(y-x^2)+g(x,y,z)(y-x^2)+j(x).\]
+    Now we know that a point in $C$ is of the form $(t,t^2,t^3)$. If we then
+    replace $(x,y,z)$ with these values we get $p(t,t^2,t^3)=h(t)$. For this to
+    be in $C$ we must have $h(t)=0$ for all $t$. Hence $h(t)=0$ and we have
+    $I(C)=(y-x^2,z-x^3)$.
+    
+    Now of course the map $t\mapsto(t,t^2,t^3)$ is an isomorphism of algebraic
+    varieties. It is a polynomial map on way and projection the other way.
+    Hence $\Gamma(C)\equiv\Gamma(k)=k[T]$.
+  \end{proof}
+\end{problem}
+
+\begin{problem}
+  Assume that $k$ is algebraically closed. Determine the ideals $I(V)$ of
+  the following sets.
+  \[V(XY^3+X^3Y-X^2+Y),V(X^2Y,(X-1)(Y+1)^2),\\
+  V(Z-XY,Y^2+XZ-X^2).\]
+  \begin{proof}
+    Let $F(X,Y)=XY^3+X^3Y-X^2+Y$.
+    Since $k$ is algebraically closed then $V=V(F)$ has infinitely
+    many points. This is because for every $x_0$ we get a polynomial in $Y$,
+    which must have a root. Thus we have infinitely many points in $V$. A quick
+    maple command shows that $F$ is irreducible. (One could also show
+    irreducibility by assuming that $F=GH$ where $\deg G=1$ and $\deg H=3$ or
+    $\deg G=\deg H=2$. Then finding values for various coefficients until a
+    contradiction is met.)
+    Hence $I(V(F))=(F)$ by problem
+    3.
+
+    We see that $Y*X^2Y=(XY)^2$ so we can replace $X^2Y$ with $XY$. Furthermore
+    $(X-1)*(X-1)(Y+1)^2=( (X-1)(Y+1))^2$, so we can replace $(X-1)(Y+1)^2$ with
+    $(X-1)(Y+1)$. So then we have $V(XY,(X-1)(Y+1))$, but this is
+    $V(XY,XY-Y+X-1)$, which can be replace with $V(XY,X-Y-1)$. Finally we can
+    replace the $Y$ in the first equation with $X-1$ and we have
+    $V(X(X-1),X-Y-1)$. Then it is clear
+    to see that $V(X(X-1),X-Y-1)=\{(0,-1),(1,0)\}$. Now suppose $p\in
+    I(V(X(X-1),X-Y-1))$. We can reduce modulo $X-Y-1$ with respect to $Y$ and we get
+    \[p=h(X,Y)(X-Y-1)+j(X).\]
+    This needs to be zero on $(0,-1)$ and $(1,0)$. In the former case we have
+    $p(0,-1)=j(0)$ and in the latter we have $p(1,0)=j(1)$. Hence $j(0)=0$ and
+    $j(1)=0$. Hence $j(X)=X(X-1)*\ell(X)$ for some polynomial $\ell(X)$. Thus
+    $p\in(X(X-1),X-Y-1)$ and so $I(V(X^2Y,(X-1)(Y+1)^2))=(X(X-1),X-Y-1)$.
+  \end{proof}
+\end{problem}
+\end{document} %
